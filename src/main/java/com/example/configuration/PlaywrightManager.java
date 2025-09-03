@@ -30,7 +30,7 @@ public class PlaywrightManager {
     }
 
     public void setUp(Properties config) {
-        String browser = System.getProperty("browser", config.getProperty("browser", "chromium"));
+        String browser = System.getProperty("browser", config.getProperty("browser", "chrome"));
         boolean headless = Boolean.parseBoolean(System.getProperty("headless", config.getProperty("headless", "true")));
         String viewport = System.getProperty("viewport", config.getProperty("viewport", "1920x1080"));
         int timeout = Integer.parseInt(System.getProperty("timeout", config.getProperty("timeout", "30000")));

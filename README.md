@@ -18,7 +18,7 @@ This repository contains automated UI test using the Playwright testing framewor
 
 2. Install dependencies:
    ```
-   mvn clean install
+   mvn clean install -DskipTests=true
    ```
 
 3. Install Playwright browsers:
