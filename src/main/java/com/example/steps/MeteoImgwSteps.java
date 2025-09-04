@@ -29,6 +29,7 @@ public class MeteoImgwSteps {
     public void manageCookiesAndPrivacyPolicyMessages() {
         meteoImgwPage.clickOnDismissCookieMsgBtn();
         meteoImgwPage.clickOnDismissCopyrightMsgBtn();
+        page.evaluate("window.scrollTo(0, 0)");
     }
 
     @Step("Look for todays weather for a random city")
@@ -39,12 +40,18 @@ public class MeteoImgwSteps {
             String weatherDetails = meteoImgwPage.getTheWeatherForPlace();
             MeteoTopBarUtil meteoTopBarUtil = new MeteoTopBarUtil();
 
-            logger.info("Weather for " + randomCity);
-            logger.info("Today is : " + meteoTopBarUtil.getDate(weatherDetails));
-            logger.info("Current temperature : " + meteoTopBarUtil.getTemperature(weatherDetails));
-            logger.info(meteoTopBarUtil.getPerceivedTemperature(weatherDetails));
-            logger.info("Sunrise: " + meteoTopBarUtil.getSunrise(weatherDetails));
-            logger.info("Sunset: " + meteoTopBarUtil.getSunset(weatherDetails));
+            if (meteoTopBarUtil.getTemperature(weatherDetails) == null)
+                throw new AssertionError("Temperature for city " + randomCity + " was not found!");
+            else {
+                logger.info("Weather for " + randomCity);
+                logger.info("Today is : " + meteoTopBarUtil.getDate(weatherDetails));
+                logger.info("Current temperature : " + meteoTopBarUtil.getTemperature(weatherDetails));
+                logger.info(meteoTopBarUtil.getPerceivedTemperature(weatherDetails));
+                logger.info("Sunrise: " + meteoTopBarUtil.getSunrise(weatherDetails));
+                logger.info("Sunset: " + meteoTopBarUtil.getSunset(weatherDetails));
+            }
+        } else {
+            throw new AssertionError("Input-file did not contains any cities!");
         }
     }
 
